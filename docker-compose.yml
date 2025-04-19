@@ -4,10 +4,13 @@ services:
   db:
     image: mysql:8.3
     container_name: mysql-db
-    env_file:
-      - ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "3307:3306"  # Expose MySQL port for local development
+      - "3307:3306"  # Expose MySQL for host access (optional)
     volumes:
       - db_data:/var/lib/mysql
       - ./express-api/seed-data:/docker-entrypoint-initdb.d
@@ -19,6 +22,7 @@ services:
       retries: 5
     networks:
       - backend
+
 
   express-api:
     build:
