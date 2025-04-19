@@ -3,6 +3,7 @@ pipeline {
 
   environment {
     // Database credentials from Jenkins
+    MYSQL_ROOT_PASSWORD = credentials('MYSQL_ROOT_PASSWORD')
     MYSQL_PASSWORD      = credentials('MYSQL_PASSWORD')
 
     // Non-sensitive config
@@ -26,6 +27,7 @@ pipeline {
         script {
           // Root .env
           writeFile file: '.env', text: """
+MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 MYSQL_DATABASE=${MYSQL_DATABASE}
 MYSQL_USER=${MYSQL_USER}
 MYSQL_PASSWORD=${MYSQL_PASSWORD}
