@@ -1,0 +1,20 @@
+# Global ignores
+node_modules/
+dist/
+.output/
+*.log
+*.DS_Store
+
+# Ignore env files
+.env
+express-api/.env
+nuxt-app/.env
+
+# Docker-related
+**/.dockerignore
+docker-compose.override.yml
+
+# Optional: Ignore OS junk files
+Thumbs.db
+ehthumbs.db
+Desktop.ini

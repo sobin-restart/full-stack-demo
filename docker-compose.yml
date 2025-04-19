@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.3
+    container_name: mysql-db
+    env_file:
+      - ./.env
+    ports:
+      - "3307:3306"  # Expose MySQL port for local development
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./express-api/seed-data:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - backend
+
+  express-api:
+    build:
+      context: ./express-api
+    container_name: express-api
+    env_file:
+      - ./express-api/.env
+    restart: always  # ← Changed to 'always' for prod
+    depends_on:
+      - db
+    networks:
+      - backend
+      - frontend
+
+  nuxt-client:
+    build:
+      context: ./nuxt-app
+    container_name: nuxt-app
+    env_file:
+      - ./nuxt-app/.env
+    ports:
+      - "3001:3000"  # Consider reverse proxying in production
+    restart: always
+    depends_on:
+      - express-api
+    networks:
+      - frontend
+
+volumes:
+  db_data:
+
+networks:
+  frontend:
+  backend:
