@@ -20,7 +20,7 @@ pipeline {
   stages {
     stage('Clone Repository') {
       steps {
-        git branch: 'main', url: 'https://github.com/sobin-restart/full-stack-demo.git'
+        git branch: 'dev', url: 'https://github.com/sobin-restart/full-stack-demo.git'
       }
     }
 
