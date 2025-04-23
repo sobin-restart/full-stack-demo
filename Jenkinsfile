@@ -5,6 +5,8 @@ pipeline {
     // Database credentials from Jenkins
     MYSQL_ROOT_PASSWORD = credentials('MYSQL_ROOT_PASSWORD')
     MYSQL_PASSWORD      = credentials('MYSQL_PASSWORD')
+    COMPOSE_PROJECT_NAME = "fullstack-ci-cd-dev"
+    
 
     // Non-sensitive config
     MYSQL_DATABASE = 'express-db'
