@@ -3,14 +3,13 @@ version: '3.8'
 services:
   db:
     image: mysql:8.3
-    container_name: mysql-db
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "3307:3306"  # Expose MySQL for host access (optional)
+      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
       - ./express-api/seed-data:/docker-entrypoint-initdb.d
@@ -23,14 +22,12 @@ services:
     networks:
       - backend
 
-
   express-api:
     build:
       context: ./express-api
-    container_name: express-api
     env_file:
       - ./express-api/.env
-    restart: always  # ← Changed to 'always' for prod
+    restart: always
     depends_on:
       - db
     networks:
@@ -40,11 +37,10 @@ services:
   nuxt-client:
     build:
       context: ./nuxt-app
-    container_name: nuxt-app
     env_file:
       - ./nuxt-app/.env
     ports:
-      - "3001:3000"  # Consider reverse proxying in production
+      - "3002:3000"
     restart: always
     depends_on:
       - express-api
