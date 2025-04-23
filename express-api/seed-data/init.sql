@@ -5,5 +5,5 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (name, email)
-VALUES ('Sobin', 'sobin@example.com'),
-       ('Lucy', 'lucy@openai.com');
+VALUES ('Sobin', 'sobin_prod@example.com'),
+       ('Lucy', 'lucy_prod@openai.com');
